@@ -198,8 +198,15 @@ namespace CalculatorApp
             }
             else if (operation == '%')
             {
-                result = num1 % num2;
-                calculatorDisplay.Text = result.ToString() + "R";
+                if (num2 != 0)
+                {
+                    result = num1 % num2;
+                    calculatorDisplay.Text = result.ToString() + "R";
+                }
+                else
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
             }
             else if (operation == '/')
             {
@@ -220,6 +227,14 @@ namespace CalculatorApp
             this.calculatorDisplay.Text = "";
             input += '.';
             calculatorDisplay.Text += input;
+        }
+
+        private void buttonNeg_Click(object sender, EventArgs e)
+        {
+            var neg = Convert.ToInt32(calculatorDisplay.Text);
+            var negative = neg * -1;
+            input = negative.ToString();
+            calculatorDisplay.Text = input;
         }
     }
 }
