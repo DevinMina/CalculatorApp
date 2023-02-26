@@ -231,10 +231,21 @@ namespace CalculatorApp
 
         private void buttonNeg_Click(object sender, EventArgs e)
         {
-            var neg = Convert.ToInt32(calculatorDisplay.Text);
-            var negative = neg * -1;
-            input = negative.ToString();
-            calculatorDisplay.Text = input;
+            try
+            {
+                //this.calculatorDisplay.Text = "";
+                int neg = -1 * Convert.ToInt32(calculatorDisplay.Text);
+                input = neg.ToString();
+                calculatorDisplay.Text = input;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Unable to negative, non-number");
+            }
+        }
+
+        private void calculatorDisplay_Click(object sender, EventArgs e)
+        {
         }
     }
 }
