@@ -12,23 +12,30 @@ namespace CalculatorApp
 {
     public partial class CalculatorForm : Form
     {
+        #region Variables
+
         string input = string.Empty;
         string operand1 = string.Empty;
         string operand2 = string.Empty;
         char operation;
         double result = 0.0;
 
+        #endregion
+
+        #region CalculatorForm()
 
         public CalculatorForm()
         {
             InitializeComponent();
-            MaxDisplayLength();
         }
+
+        #endregion
 
         #region Buttonns 7-8-9
 
         private void button7_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "7";
             calculatorDisplay.Text += input;
@@ -36,6 +43,7 @@ namespace CalculatorApp
 
         private void button8_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "8";
             calculatorDisplay.Text += input;
@@ -43,6 +51,7 @@ namespace CalculatorApp
 
         private void button9_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "9";
             calculatorDisplay.Text += input;
@@ -54,6 +63,7 @@ namespace CalculatorApp
 
         private void button4_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "4";
             calculatorDisplay.Text += input;
@@ -61,6 +71,7 @@ namespace CalculatorApp
 
         private void button5_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "5";
             calculatorDisplay.Text += input;
@@ -68,6 +79,7 @@ namespace CalculatorApp
 
         private void button6_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "6";
             calculatorDisplay.Text += input;
@@ -79,13 +91,16 @@ namespace CalculatorApp
 
         private void button3_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "3";
             calculatorDisplay.Text += input;
         }
 
+
         private void button2_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "2";
             calculatorDisplay.Text += input;
@@ -93,6 +108,7 @@ namespace CalculatorApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "1";
             calculatorDisplay.Text += input;
@@ -100,6 +116,7 @@ namespace CalculatorApp
 
         private void button0_Click(object sender, EventArgs e)
         {
+            MaxDisplayLength();
             calculatorDisplay.Text = "";
             input += "0";
             calculatorDisplay.Text += input;
@@ -107,15 +124,25 @@ namespace CalculatorApp
 
         #endregion
 
-        #region MaxDisplayLengthMethod FIX ME!
+        #region MaxDisplayLengthMethod
 
-        public void MaxDisplayLength()
+        public string MaxDisplayLength()
         {
-            //Doesn't work
+            if (calculatorDisplay.Text.Contains("ERROR"))
+            {
+                calculatorDisplay.Text = string.Empty;
+                input = string.Empty;
+            }
+
             if (calculatorDisplay.Text.Length >= 10)
             {
                 MessageBox.Show("Error no more than 10 digits please.", "Error", MessageBoxButtons.OK);
+                calculatorDisplay.Text = string.Empty;
+                input = string.Empty;
+                calculatorDisplay.Text = "ERROR";
             }
+
+            return calculatorDisplay.Text;
         }
 
         #endregion
@@ -157,69 +184,12 @@ namespace CalculatorApp
             input = string.Empty;
         }
 
-        #endregion
-
         private void buttonClear_Click(object sender, EventArgs e)
         {
             this.calculatorDisplay.Text = "";
             this.input = string.Empty;
             this.operand1 = string.Empty;
             this.operand2 = string.Empty;
-        }
-
-        private void buttonEquals_Click(object sender, EventArgs e)
-        {
-            operand2 = input;
-            double num1, num2;
-            double.TryParse(operand1, out num1);
-            double.TryParse(operand2, out num2);
-
-            //Clear for next calculation after hitting equal
-            this.calculatorDisplay.Text = "";
-            this.input = string.Empty;
-            this.operand1 = string.Empty;
-            this.operand2 = string.Empty;
-
-
-            if (operation == '+')
-            {
-                result = num1 + num2;
-                calculatorDisplay.Text = result.ToString();
-            }
-            else if (operation == '-')
-            {
-                result = num1 - num2;
-                calculatorDisplay.Text = result.ToString();
-            }
-            else if (operation == '*')
-            {
-                result = num1 * num2;
-                calculatorDisplay.Text = result.ToString();
-            }
-            else if (operation == '%')
-            {
-                if (num2 != 0)
-                {
-                    result = num1 % num2;
-                    calculatorDisplay.Text = result.ToString() + "R";
-                }
-                else
-                {
-                    calculatorDisplay.Text = "ERROR";
-                }
-            }
-            else if (operation == '/')
-            {
-                if (num2 != 0)
-                {
-                    result = num1 / num2;
-                    calculatorDisplay.Text = result.ToString();
-                }
-                else
-                {
-                    calculatorDisplay.Text = "DIV/ZERO!";
-                }
-            }
         }
 
         private void buttonDot_Click(object sender, EventArgs e)
@@ -244,8 +214,100 @@ namespace CalculatorApp
             }
         }
 
-        private void calculatorDisplay_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Equals Button
+
+        private void buttonEquals_Click(object sender, EventArgs e)
         {
+            operand2 = input;
+            double num1, num2;
+            double.TryParse(operand1, out num1);
+            double.TryParse(operand2, out num2);
+
+            //Clear for next calculation after hitting equal
+            this.calculatorDisplay.Text = "";
+            this.input = string.Empty;
+            this.operand1 = string.Empty;
+            this.operand2 = string.Empty;
+
+
+            if (operation == '+')
+            {
+                result = num1 + num2;
+                if (result.ToString().Length >= 10)
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
+                else
+                {
+                    calculatorDisplay.Text = result.ToString();
+                }
+            }
+            else if (operation == '-')
+            {
+                result = num1 - num2;
+                if (result.ToString().Length >= 10)
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
+                else
+                {
+                    calculatorDisplay.Text = result.ToString();
+                }
+            }
+            else if (operation == '*')
+            {
+                result = num1 * num2;
+                if (result.ToString().Length >= 10)
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
+                else
+                {
+                    calculatorDisplay.Text = result.ToString();
+                }
+            }
+            else if (operation == '%')
+            {
+                if (num2 != 0)
+                {
+                    result = num1 % num2;
+                    if (result.ToString().Length >= 10)
+                    {
+                        calculatorDisplay.Text = "ERROR";
+                    }
+                    else
+                    {
+                        calculatorDisplay.Text = result.ToString() + "R";
+                    }
+                }
+                else
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
+            }
+            else if (operation == '/')
+            {
+                if (num2 != 0)
+                {
+                    result = num1 / num2;
+                    if (result.ToString().Length >= 10)
+                    {
+                        calculatorDisplay.Text = "ERROR";
+                    }
+                    else
+                    {
+                        calculatorDisplay.Text = result.ToString();
+                    }
+                }
+                else
+                {
+                    calculatorDisplay.Text = "ERROR";
+                }
+            }
         }
+
+        #endregion
     }
 }

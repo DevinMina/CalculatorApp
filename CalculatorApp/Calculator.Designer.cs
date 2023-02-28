@@ -238,7 +238,6 @@ namespace CalculatorApp
             this.calculatorDisplay.Size = new System.Drawing.Size(284, 63);
             this.calculatorDisplay.TabIndex = 16;
             this.calculatorDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.calculatorDisplay.Click += new System.EventHandler(this.calculatorDisplay_Click);
             // 
             // buttonClear
             // 
